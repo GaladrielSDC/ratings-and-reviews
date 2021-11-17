@@ -72,8 +72,8 @@ alter table characteristics
   on update cascade on delete cascade;
 
 -- -- load data into tables
-copy products from '../data/product.csv' delimiter ',' csv header;
-copy reviews from '../data/reviews.csv' delimiter ',' csv header;
+copy products from '/Users/yina/Documents/HR/SDC/data/product.csv' delimiter ',' csv header;
+copy reviews from '/Users/yina/Documents/HR/SDC/data/reviews.csv' delimiter ',' csv header;
 
 -- -- load data local infile '../data/product.csv'
 -- -- into table products
@@ -82,7 +82,7 @@ copy reviews from '../data/reviews.csv' delimiter ',' csv header;
 -- -- lines terminated by '\n'
 -- -- ignore 1 rows;
 
-copy characteristics from '../data/characteristics.csv' delimiter ',' csv header;
+copy characteristics from '/Users/yina/Documents/HR/SDC/data/characteristics.csv' delimiter ',' csv header;
 -- load data local infile '../data/characteristics.csv'
 -- into table characteristics
 -- fields terminated by ','
@@ -90,7 +90,7 @@ copy characteristics from '../data/characteristics.csv' delimiter ',' csv header
 -- lines terminated by '\n'
 -- ignore 1 rows;
 
-copy reviews_characteristics from '../data/characteristic_reviews.csv' delimiter ',' csv header;
+copy reviews_characteristics from '/Users/yina/Documents/HR/SDC/data/characteristic_reviews.csv' delimiter ',' csv header;
 -- load data local infile '../data/characteristic_reviews.csv'
 -- into table reviews_characteristics
 -- fields terminated by ','
@@ -98,7 +98,7 @@ copy reviews_characteristics from '../data/characteristic_reviews.csv' delimiter
 -- lines terminated by '\n'
 -- ignore 1 rows;
 
-copy reviews_photos from '../data/reviews_photos.csv' delimiter ',' csv header;
+copy reviews_photos from '/Users/yina/Documents/HR/SDC/data/reviews_photos.csv' delimiter ',' csv header;
 -- load data local infile '../data/reviews_photos.csv'
 -- into table reviews_photos
 -- fields terminated by ','
