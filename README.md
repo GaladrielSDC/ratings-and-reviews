@@ -1,1 +1,1 @@
-# ratings-and-reviews# ratings-and-reviews
+# Atelier Ratings & Reviews API
