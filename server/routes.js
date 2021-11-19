@@ -5,7 +5,7 @@ const controller = require('./controllers');
 router.get('/', controller.reviews.get);
 
 // // GET review meta
-// router.get('/meta', controller.metareview.get);
+router.get('/meta', controller.metareview.get);
 
 // // POST new review
 // router.post('/', controller.review.post);
