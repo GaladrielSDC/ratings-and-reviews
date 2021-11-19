@@ -1,8 +1,8 @@
 const express = require('express');
 
 // Middleware
-var morgan = require('morgan');
 var cors = require('cors');
+const bodyParser = require('body-parser');
 
 // Router
 var router = require('./routes.js');
@@ -14,13 +14,15 @@ module.exports.app = app;
 app.set('port', 3000);
 
 // Logging and parsing
-app.use(morgan('dev'));
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 
 // Set up our routes
-// app.use('/classes', router);
-
+app.use('/api/reviews', router);
+// app.get('/api/reviews', (req, res) => {
+//   console.log('what request looks like:', req.query);
+//   res.send('Hello from the server')
+// })
 // Serve the client files
 // app.use(express.static(__dirname + '/../client'));
 

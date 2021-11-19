@@ -1,13 +1,19 @@
-var router = require('express').Router();
+const router = require('express').Router();
+const controller = require('./controllers');
 
 // GET reviews
+router.get('/', controller.reviews.get);
 
-// GET review meta
+// // GET review meta
+// router.get('/meta', controller.metareview.get);
 
-// POST new review
+// // POST new review
+// router.post('/', controller.review.post);
 
-// PUT mark review as helpful
+// // PUT mark review as helpful
+// router.put('/:review_id/helpful', controller.review.helpful);
 
-// PUT report review
+// // PUT report review
+// router.put('/:review_id/report', controller.review.report);
 
 module.exports = router;
