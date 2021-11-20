@@ -20,44 +20,47 @@ const postReview = (params, callback) => {
     returning id
   `;
 
-  console.log(qStringReviews);
-  db.query(qStringReviews, values, (err, res) => {
-    if (err) {
+  let chars = params.characteristics;
+
+  async function postQuery() {
+    try {
+      const postReviewsResult = await db.query(qStringReviews, values);
+      const reviewId = postReviewsResult.rows[0].id;
+      for (var key in chars) {
+        let qValueChars = [key, reviewId, chars[key]];
+        let qStringChars = `
+          insert into reviews_characteristics (
+            id, characteristic_id, review_id, value
+          ) values (
+            (select max(id) from reviews_characteristics) + 1, $1, $2, $3
+          )
+        `;
+        await db.query(qStringChars, qValueChars);
+      }
+
+      if (params.photos && params.photos.length > 0) {
+        let photos = params.photos;
+        let nPhotos = photos.length;
+        for (var i = 0; i < nPhotos; i++) {
+          let qValuePhotos = [reviewId, photos[i]];
+          let qStringPhotos = `
+            insert into reviews_photos (
+              id, review_id, url
+            ) values (
+              (select max(id) from reviews_photos) + 1, $1, $2
+            )
+          `;
+          await db.query(qStringPhotos, qValuePhotos);
+        }
+      }
+
+      callback(null, postReviewsResult.rows[0]);
+
+    } catch (err) {
       callback(err, null);
-    } else {
-      callback(null, res.rows[0])
     }
-  });
-
-  // db.query(qStringReviews, (err, res) => {
-  //   if (err) {
-  //     callback(err, null);
-  //   } else {
-  //     let reviewId = res.rows[0];
-  //     if (params.photos) {
-  //       let nPhotos = params.photos.length;
-  //       for (var i = 0; i < nPhotos; i++) {
-
-  //       }
-  //     }
-  //   }
-  // })
-
-  // let qStringPhotos = `
-  //   insert into reviews_photos (
-  //     id, review_id, url
-  //   ) values (
-  //     (select max(id) from reviews_photos) + 1, ${reviewId}, ${url}
-  //   )
-  // `;
-
-  // let qStringChars = `
-  //     insert into reviews_characteristics (
-  //       id, characteristic_id, review_id, value
-  //     ) values (
-  //       (select max(id) from reviews_characteristics) + 1, ${charId}, ${reviewId}, ${charValue}
-  //     )
-  // `
+  }
+  postQuery();
 
 }
 
@@ -75,7 +78,7 @@ const updateReview = (id, field, callback) => {
     `
   }
 
-  console.log('query string:', qString);
+  // console.log('query string:', qString);
 
   db.query(qString, (err, res) => {
     if (err) {
