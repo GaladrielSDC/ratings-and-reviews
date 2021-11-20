@@ -61,4 +61,30 @@ const postReview = (params, callback) => {
 
 }
 
+const updateReview = (id, field, callback) => {
+  let qString;
+  if (field == 'helpfulness') {
+    qString = `
+      update reviews set helpfullness = helpfullness + 1 where id = ${id} returning helpfullness
+    `
+  }
+
+  if (field == 'report') {
+    qString = `
+      update reviews set reported = true where id = ${id} returning reported
+    `
+  }
+
+  console.log('query string:', qString);
+
+  db.query(qString, (err, res) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res.rows[0])
+    }
+  })
+}
+
 module.exports.postReview = postReview;
+module.exports.updateReview = updateReview;
