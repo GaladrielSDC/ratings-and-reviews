@@ -59,7 +59,7 @@ pool.query('SELECT NOW()', (err, res) => {
 //         'body', body,
 //         'date', date,
 //         'reviewer_name', reviewer_name,
-//         'helpfulness', helpfullness,
+//         'helpfulness', helpfulness,
 //         'photos', photos
 //       )
 //     ) as results

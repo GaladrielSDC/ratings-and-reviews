@@ -43,7 +43,7 @@ const getMetareview = (params, callback) => {
 
   `;
 
-  console.log('query string:', qString);
+  // console.log('query string:', qString);
 
   db.query(qString, (err, res) => {
     if (err) {

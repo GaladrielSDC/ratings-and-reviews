@@ -13,7 +13,7 @@ const postReview = (params, callback) => {
 
   let qStringReviews = `
     insert into reviews (
-      id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfullness
+      id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness
     ) values (
       (select max(id) from reviews) + 1, $1, $2, current_timestamp, $3, $4, $5, false, $6, $7, null, 0
     )
@@ -68,7 +68,7 @@ const updateReview = (id, field, callback) => {
   let qString;
   if (field == 'helpfulness') {
     qString = `
-      update reviews set helpfullness = helpfullness + 1 where id = ${id} returning helpfullness
+      update reviews set helpfulness = helpfulness + 1 where id = ${id} returning helpfulness
     `
   }
 
