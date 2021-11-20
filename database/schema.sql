@@ -17,7 +17,7 @@ create table reviews (
   reviewer_name varchar(50),
   reviewer_email varchar(50),
   response varchar(200),
-  helpfullness int
+  helpfulness int
 );
 
 drop table if exists reviews_photos;
@@ -63,7 +63,7 @@ alter table reviews_photos
 
 alter table reviews_characteristics
   add foreign key (review_id) references reviews(id)
-  on update cascade on delete restrict,
+  on update cascade on delete cascade,
   add foreign key (characteristic_id) references characteristics(id)
   on update cascade on delete cascade;
 
