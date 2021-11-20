@@ -3,10 +3,11 @@ const db = require('../db');
 // Get reviews for a product
 const getReviews = (params, callback) => {
   let product = params.product_id;
-  let page = params.page || 1;
-  let count = params.count || 5;
+  let page = parseInt(params.page || 1);
+  let count = parseInt(params.count || 5);
   let start = count * (page - 1) + 1;
   let end = start + count - 1;
+  // console.log(count, start, end);
 
   let sortBy;
   if (params.sort === 'newest') {
