@@ -2,10 +2,18 @@
 
 -- insert into reviews (product_id) values (1);
 
-insert into reviews (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfullness)
-values ((select max(id) from reviews) + 1, 1, 4, current_timestamp, 'this is the summary', 'sdfasdfawefijawoiejfoiawjeoijfoaijwegaowijegoijijoawijeofijaowiejgoijawoiejgoioiawjegoaasdfwerwetwet', true, false, 'i am reviewer', 'reviewer@gmail.com', null, 0)
-returning id;
-
+with query_product as (
+        select *,
+        date_rank + helpful_rank as relevance
+        from (
+          select *,
+          dense_rank() over (order by date) as date_rank,
+          dense_rank() over (order by helpfulness) as helpful_rank
+          from reviews
+          where product_id = 40365
+        ) a
+      )
+select * from query_product;
 
 
 -- GET metareview

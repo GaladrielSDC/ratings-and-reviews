@@ -12,20 +12,30 @@ const getReviews = (params, callback) => {
   if (params.sort === 'newest') {
     sortBy = 'date';
   } else if (params.sort === 'helpful') {
-    sortBy = 'helpfullness';
+    sortBy = 'helpfulness';
   } else {
-    sortBy = 'date';
+    sortBy = 'relevance';
   }
 
   let qString = `
     with query_product as (
       select *,
-      row_number() over (partition by product_id order by ${sortBy}) as rn
-      from reviews
+      date_rank + helpful_rank as relevance
+      from (
+        select *,
+        dense_rank() over (order by date) as date_rank,
+        dense_rank() over (order by helpfulness) as helpful_rank
+        from reviews
+        where product_id = ${product}
+      ) a
+    ), ordered_query_product as (
+      select *,
+      row_number() over (partition by product_id order by ${sortBy} desc) as rn
+      from query_product
       where product_id = ${product}
     ), query_product_limit as (
       select *
-      from query_product
+      from ordered_query_product
       where rn >= ${start} and rn <= ${end}
     ), photos as (
       select * from reviews_photos
@@ -60,7 +70,7 @@ const getReviews = (params, callback) => {
         'body', body,
         'date', date,
         'reviewer_name', reviewer_name,
-        'helpfulness', helpfullness,
+        'helpfulness', helpfulness,
         'photos', photos
       )
     ) as results
@@ -73,7 +83,7 @@ const getReviews = (params, callback) => {
     `;
 
 
-  console.log('query string:', qString);
+  // console.log('query string:', qString);
   db.query(qString, (err, res) => {
     if (err) {
       callback(err, null);
