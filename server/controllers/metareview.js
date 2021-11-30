@@ -1,6 +1,10 @@
 const models = require('../models');
 
 const get = (req, res) => {
+  if (req.query.product_id == null) {
+    res.status(400).send('Invalid product id');
+  }
+
   const productId = req.query.product_id;
   if (typeof parseInt(productId) === 'number') {
     let params = req.query;
