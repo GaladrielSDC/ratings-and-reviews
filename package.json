@@ -10,6 +10,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.13",
     "pg": "^8.7.1",
+    "supertest": "^6.1.6",
     "underscore": "^1.13.1"
   },
   "devDependencies": {
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "start": "nodemon server/index.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
