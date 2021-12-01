@@ -14,15 +14,15 @@ const get = (req, res) => {
 
       } else {
         // console.log('what is params', params);
-        let nReviews = result.results.length;
-        for (var i = 0; i < nReviews; i++) {
-          if (!result.results[i].photos) {
-            result.results[i].photos = [];
-          }
-          if (result.results[i].response === 'null') {
-            result.results[i].response = null;
-          }
-        }
+        // let nReviews = result.results.length;
+        // for (var i = 0; i < nReviews; i++) {
+        //   if (!result.results[i].photos) {
+        //     result.results[i].photos = [];
+        //   }
+        //   if (result.results[i].response === 'null') {
+        //     result.results[i].response = null;
+        //   }
+        // }
         res.status(200).send(result);
       }
     })
