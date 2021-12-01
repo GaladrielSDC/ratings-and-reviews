@@ -1,5 +1,6 @@
 public/
 newrelic.js
+server/db/index.js
 ###OSX###
 
 .DS_Store
